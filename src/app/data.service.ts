@@ -21,8 +21,6 @@ export class DataService {
         return result.content;
       }),
       tap((users) => {
-        console.log(users);
-
         this.usersService.setUsers(users);
       })
     );

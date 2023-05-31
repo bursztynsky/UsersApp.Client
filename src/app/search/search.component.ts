@@ -20,8 +20,11 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
-    console.log('siup')
-    this.dataService.getUsers(this.userForm.value.amount).subscribe();
+    const amount = this.userForm.value.amount;
+
+    if (amount < 1 || amount > 200) return;
+
+    this.dataService.getUsers(amount).subscribe();
   }
 
   createForm(): void {
