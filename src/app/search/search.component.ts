@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { DataService } from '../data.service';
 
 @Component({
@@ -8,15 +8,33 @@ import { DataService } from '../data.service';
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit {
-  @ViewChild('f', { static: false }) slForm: NgForm;
+  userForm: FormGroup;
 
-  constructor(private dataService: DataService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private dataService: DataService
+  ) {
+    this.createForm();
+  }
 
   ngOnInit(): void {}
 
-  onSubmit(form: NgForm) {
-    console.log(form.value.amount);
+  onSubmit() {
+    console.log('siup')
+    this.dataService.getUsers(this.userForm.value.amount).subscribe();
+  }
 
-    this.dataService.getUsers(form.value.amount).subscribe();
+  createForm(): void {
+    this.userForm = this.formBuilder.group({
+      amount: [
+        1,
+        [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(200),
+          Validators.pattern(/^[1-9]\d*$/),
+        ],
+      ],
+    });
   }
 }
