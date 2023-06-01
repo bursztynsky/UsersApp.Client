@@ -2,6 +2,7 @@
 
 This project is a Client App written in Angular 16. To run it just use this command in the main app folder:
 ```bash
+  npm i
   ng serve --open
 ```
 
